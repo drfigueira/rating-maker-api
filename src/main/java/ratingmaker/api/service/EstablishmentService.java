@@ -46,17 +46,19 @@ public class EstablishmentService {
     public void update(final Long id,
                        final EstablishmentRequest establishmentRequest) {
         log.info("method=update, id={}, establishment={}");
-        Long establishmentId = establishmentRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new).getId();
         Establishment establishment = establishmentMapper.requestToEntity(establishmentRequest);
-        establishment.setId(establishmentId);
+        establishment.setId(findIdIfExists(id));
         establishmentRepository.save(establishment);
     }
 
     public void delete(final Long id) {
         log.info("method=delete, id={}");
-        Establishment establishment = establishmentRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
-        establishmentRepository.delete(establishment);
+        establishmentRepository.deleteById(findIdIfExists(id));
+    }
+
+    private Long findIdIfExists(final Long id) {
+        log.info("method=findIdIfExists, id={}");
+        return establishmentRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new).getId();
     }
 }
