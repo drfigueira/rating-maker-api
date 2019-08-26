@@ -27,31 +27,36 @@ public class EstablishmentService {
 
     public void save(final EstablishmentRequest establishmentRequest) {
         log.info("method=save, establishmentRequest={}");
-        establishmentRepository
-                .save(establishmentMapper
-                        .requestToEntity(establishmentRequest));
+        establishmentRepository.save(
+                establishmentMapper.requestToEntity(establishmentRequest));
     }
 
     public List<EstablishmentResponse> findByNameIgnoreCaseContainingOrderByNameAsc(final String name) {
         log.info("method=findByNameLike, name={}");
-        return establishmentMapper
-                .entitiesToResponses(establishmentRepository
-                        .findByNameIgnoreCaseContainingOrderByNameAsc(name));
+        return establishmentMapper.entitiesToResponses(
+                establishmentRepository.findByNameIgnoreCaseContainingOrderByNameAsc(name));
     }
 
     public List<EstablishmentResponse> findAll() {
         log.info("method=findAll");
-        return establishmentMapper
-                .entitiesToResponses(establishmentRepository
-                        .findAll());
+        return establishmentMapper.entitiesToResponses(
+                establishmentRepository.findAll());
     }
 
-    public void update(Long id, EstablishmentRequest establishmentRequest) {
+    public void update(final Long id,
+                       final EstablishmentRequest establishmentRequest) {
         log.info("method=update, id={}, establishment={}");
         Long establishmentId = establishmentRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new).getId();
         Establishment establishment = establishmentMapper.requestToEntity(establishmentRequest);
         establishment.setId(establishmentId);
         establishmentRepository.save(establishment);
+    }
+
+    public void delete(final Long id) {
+        log.info("method=delete, id={}");
+        Establishment establishment = establishmentRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+        establishmentRepository.delete(establishment);
     }
 }
