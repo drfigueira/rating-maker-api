@@ -4,13 +4,18 @@ import br.com.leonardoferreira.jbacon.JBacon;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Component;
 import ratingmaker.api.domain.request.EstablishmentRequest;
+import ratingmaker.api.repository.EstablishmentRepository;
 
 @Component
 public class EstablishmentRequestFactory extends JBacon<EstablishmentRequest> {
 
+    private final EstablishmentRepository establishmentRepository;
+
     private final Faker faker;
 
-    public EstablishmentRequestFactory(final Faker faker) {
+    public EstablishmentRequestFactory(final EstablishmentRepository establishmentRepository,
+                                       final Faker faker) {
+        this.establishmentRepository = establishmentRepository;
         this.faker = faker;
     }
 
@@ -23,8 +28,7 @@ public class EstablishmentRequestFactory extends JBacon<EstablishmentRequest> {
 
     @Override
     protected EstablishmentRequest getEmpty() {
-        return EstablishmentRequest.builder()
-                .build();
+        return new EstablishmentRequest();
     }
 
     @Override

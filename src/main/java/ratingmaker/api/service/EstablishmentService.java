@@ -26,13 +26,13 @@ public class EstablishmentService {
     }
 
     public void save(final EstablishmentRequest establishmentRequest) {
-        log.info("method=save, establishmentRequest={}");
+        log.info("method=save, establishmentRequest={}", establishmentRequest);
         establishmentRepository.save(
                 establishmentMapper.requestToEntity(establishmentRequest));
     }
 
     public List<EstablishmentResponse> findByNameIgnoreCaseContainingOrderByNameAsc(final String name) {
-        log.info("method=findByNameLike, name={}");
+        log.info("method=findByNameIgnoreCaseContainingOrderByNameAsc, name={}", name);
         return establishmentMapper.entitiesToResponses(
                 establishmentRepository.findByNameIgnoreCaseContainingOrderByNameAsc(name));
     }
@@ -45,19 +45,19 @@ public class EstablishmentService {
 
     public void update(final Long id,
                        final EstablishmentRequest establishmentRequest) {
-        log.info("method=update, id={}, establishment={}");
+        log.info("method=update, id={}, establishmentRequest={}", id, establishmentRequest);
         Establishment establishment = establishmentMapper.requestToEntity(establishmentRequest);
         establishment.setId(findIdIfExists(id));
         establishmentRepository.save(establishment);
     }
 
     public void delete(final Long id) {
-        log.info("method=delete, id={}");
+        log.info("method=delete, id={}", id);
         establishmentRepository.deleteById(findIdIfExists(id));
     }
 
-    private Long findIdIfExists(final Long id) {
-        log.info("method=findIdIfExists, id={}");
+    public Long findIdIfExists(final Long id) {
+        log.info("method=findIdIfExists, id={}", id);
         return establishmentRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new).getId();
     }

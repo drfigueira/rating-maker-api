@@ -41,23 +41,4 @@ public class EstablishmentIntegrationTest extends BaseIntegrationTest {
                     .body("$", Matchers.hasSize(5));
         // @formatter:on
     }
-
-    @Test
-    void shouldPersistEstablishment() {
-        Establishment establishment = establishmentFactory.build();
-
-        // @formatter:off
-        RestAssured
-                .given()
-                    .log().all()
-                    .contentType(JSON)
-                    .body(establishment)
-                .when()
-                    .post("/establishments")
-                .then()
-                    .log().all()
-                .statusCode(201);
-        // @formatter:on
-
-    }
 }

@@ -18,7 +18,7 @@ public interface ProductMapper {
             @Mapping(target = "establishment", source = "establishment.id"),
             @Mapping(target = "productRating", source = "productRatings")
     })
-    ProductResponse entityToResponse(Product establishment);
+    ProductResponse entityToResponse(Product product);
 
     @Mappings({
             @Mapping(target = "establishment.id", source = "establishment"),
@@ -28,11 +28,11 @@ public interface ProductMapper {
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true)
     })
-    Product requestToEntity(ProductRequest establishmentRequest);
+    Product requestToEntity(ProductRequest productRequest);
 
-    List<ProductResponse> entitiesToResponses(List<Product> establishments);
+    List<ProductResponse> entitiesToResponses(List<Product> products);
 
-    List<Product> requestsToEntities(List<ProductRequest> establishmentRequests);
+    List<Product> requestsToEntities(List<ProductRequest> productRequests);
 
     default Integer averageProductRating(Set<ProductRating> productRatings) {
         Double average = productRatings.stream()

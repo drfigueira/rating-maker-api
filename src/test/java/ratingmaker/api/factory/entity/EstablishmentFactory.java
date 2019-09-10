@@ -28,8 +28,7 @@ public class EstablishmentFactory extends JBacon<Establishment> {
 
     @Override
     protected Establishment getEmpty() {
-        return Establishment.builder()
-                .build();
+        return new Establishment();
     }
 
     @Override
