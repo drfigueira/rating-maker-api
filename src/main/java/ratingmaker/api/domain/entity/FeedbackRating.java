@@ -15,30 +15,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductFeedback {
+public class FeedbackRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    private Product product;
+    private ProductFeedback productFeedback;
 
-    @Column(nullable = false, length = 400)
-    private String feedback;
-
-    @OneToMany(mappedBy = "productFeedback", fetch = FetchType.EAGER)
-    private Set<FeedbackRating> feedbackRatings;
+    @Column(nullable = false)
+    private Integer rating;
 
     @CreationTimestamp
     @Column(nullable = false)

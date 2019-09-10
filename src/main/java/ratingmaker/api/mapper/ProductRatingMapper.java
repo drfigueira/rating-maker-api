@@ -10,7 +10,7 @@ import ratingmaker.api.domain.response.ProductRatingResponse;
 @Mapper(componentModel = "spring")
 public interface ProductRatingMapper {
 
-    ProductRatingResponse entityToResponse(ProductRating establishment);
+    ProductRatingResponse entityToResponse(ProductRating productRating);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
@@ -18,5 +18,5 @@ public interface ProductRatingMapper {
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "product", ignore = true)
     })
-    ProductRating requestToEntity(ProductRatingRequest establishmentRequest);
+    ProductRating requestToEntity(ProductRatingRequest productRatingRequest);
 }
