@@ -23,6 +23,7 @@ public interface ProductFeedbackMapper {
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
+            @Mapping(target = "feedbackRatings", ignore = true),
             @Mapping(target = "product.id", source = "product")
     })
     ProductFeedback requestToEntity(ProductFeedbackRequest productFeedbackRequest);

@@ -13,7 +13,7 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3306/hamburguer?allowPublicKeyRetrieval=true&sslMode=DISABLED
+    url: jdbc:mysql://localhost:3306/hamburger?allowPublicKeyRetrieval=true&sslMode=DISABLED
     username: root
     password: root
 
