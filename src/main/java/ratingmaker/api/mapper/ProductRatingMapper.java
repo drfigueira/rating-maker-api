@@ -14,6 +14,7 @@ public interface ProductRatingMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
+            @Mapping(target = "product.id", source = "product"),
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "product", ignore = true)

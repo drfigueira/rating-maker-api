@@ -12,7 +12,7 @@ public class FeedbackRatingRequest {
 
     @NotNull
     @Positive
-    private Long ProductFeedback;
+    private Long productFeedback;
 
     @Min(1)
     @Max(5)

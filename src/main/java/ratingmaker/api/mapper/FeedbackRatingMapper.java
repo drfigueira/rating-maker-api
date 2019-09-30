@@ -14,6 +14,7 @@ public interface FeedbackRatingMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
+            @Mapping(target = "productFeedback.id", source = "productFeedback"),
             @Mapping(target = "createdAt", ignore = true),
             @Mapping(target = "updatedAt", ignore = true),
             @Mapping(target = "productFeedback", ignore = true)
