@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ratingmaker.api.base.BaseIntegrationTest;
+import ratingmaker.api.domain.entity.Establishment;
 import ratingmaker.api.domain.entity.Product;
+import ratingmaker.api.domain.entity.ProductFeedback;
 import ratingmaker.api.factory.entity.EstablishmentFactory;
+import ratingmaker.api.factory.entity.FeedbackRatingFactory;
 import ratingmaker.api.factory.entity.ProductFactory;
 import ratingmaker.api.factory.entity.ProductFeedbackFactory;
 
@@ -23,13 +26,17 @@ public class ProductFeedbackIntegrationTest extends BaseIntegrationTest {
 
     private final EstablishmentFactory establishmentFactory;
 
+    private final FeedbackRatingFactory feedbackRatingFactory;
+
     @Autowired
     public ProductFeedbackIntegrationTest(final ProductFeedbackFactory productFeedbackFactory,
                                           final ProductFactory productFactory,
-                                          final EstablishmentFactory establishmentFactory) {
+                                          final EstablishmentFactory establishmentFactory,
+                                          final FeedbackRatingFactory feedbackRatingFactory) {
         this.productFeedbackFactory = productFeedbackFactory;
         this.productFactory = productFactory;
         this.establishmentFactory = establishmentFactory;
+        this.feedbackRatingFactory = feedbackRatingFactory;
     }
 
     @Test
@@ -53,6 +60,37 @@ public class ProductFeedbackIntegrationTest extends BaseIntegrationTest {
                     .log().all()
                     .statusCode(200)
                     .body("$", Matchers.hasSize(5));
+        //@formatter:on
+    }
+
+    @Test
+    void shouldReturnFeedbackRatingAverage3() {
+        Establishment establishment = establishmentFactory.create();
+
+        Product product = productFactory.create(empty -> {
+            empty.setId(1L);
+            empty.setEstablishment(establishment);
+        });
+
+        ProductFeedback productFeedback = productFeedbackFactory.create(empty -> {
+            empty.setProduct(product);
+        });
+
+        feedbackRatingFactory.create(2, empty -> {
+            empty.setProductFeedback(productFeedback);
+            empty.setRating(3);
+        });
+
+        // @formatter:off
+        RestAssured
+                .given()
+                    .log().all()
+                .when()
+                    .get("/products/1/feedback")
+                .then()
+                    .log().all()
+                    .statusCode(200)
+                .body("feedbackRating", Matchers.equalTo(3));
         //@formatter:on
     }
 

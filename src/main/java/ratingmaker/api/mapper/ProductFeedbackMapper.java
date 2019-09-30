@@ -15,7 +15,8 @@ import java.util.Set;
 public interface ProductFeedbackMapper {
 
     @Mappings({
-            @Mapping(target = "product", source = "product.id")
+            @Mapping(target = "product", source = "product.id"),
+            @Mapping(target = "feedbackRating", source = "feedbackRatings")
     })
     ProductFeedbackResponse entityToResponse(ProductFeedback productFeedback);
 

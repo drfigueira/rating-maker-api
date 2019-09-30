@@ -10,4 +10,6 @@ public class ProductFeedbackResponse {
     private Long product;
 
     private String feedback;
+
+    private Integer feedbackRating;
 }
