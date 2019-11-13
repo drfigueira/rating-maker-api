@@ -13,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,13 +34,19 @@ public class Establishment {
     @OneToMany(mappedBy = "establishment")
     private Set<Product> products;
 
-    @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private String location;
+
+    @Column(nullable = false, length = 500)
+    private String image;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Date createdAt;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     @Override
     public boolean equals(Object o) {

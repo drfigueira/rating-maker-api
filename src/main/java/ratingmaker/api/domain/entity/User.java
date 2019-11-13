@@ -14,27 +14,42 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedbackRating {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private ProductFeedback productFeedback;
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @Email
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private Integer rating;
+    private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -48,8 +63,8 @@ public class FeedbackRating {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FeedbackRating that = (FeedbackRating) o;
-        return Objects.equals(id, that.id);
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
     @Override

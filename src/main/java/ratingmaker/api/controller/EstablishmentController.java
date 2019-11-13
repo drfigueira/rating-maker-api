@@ -34,7 +34,7 @@ public class EstablishmentController {
         establishmentService.save(establishmentRequest);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable final Long id,
                        @Valid @RequestBody final EstablishmentRequest establishmentRequest) {

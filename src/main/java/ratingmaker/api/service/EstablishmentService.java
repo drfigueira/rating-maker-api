@@ -46,8 +46,10 @@ public class EstablishmentService {
     public void update(final Long id,
                        final EstablishmentRequest establishmentRequest) {
         log.info("method=update, id={}, establishmentRequest={}", id, establishmentRequest);
-        Establishment establishment = establishmentMapper.requestToEntity(establishmentRequest);
-        establishment.setId(findIdIfExists(id));
+        Establishment establishment = establishmentRepository.findById(findIdIfExists(id)).get();
+        establishment.setName(establishmentRequest.getName());
+        establishment.setImage(establishmentRequest.getImage());
+        establishment.setLocation(establishmentRequest.getLocation());
         establishmentRepository.save(establishment);
     }
 

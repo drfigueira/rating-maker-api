@@ -15,4 +15,10 @@ public class EstablishmentRequest {
 
     @NotBlank
     private String name;
+
+    @NotBlank
+    private String location;
+
+    @NotBlank
+    private String image;
 }

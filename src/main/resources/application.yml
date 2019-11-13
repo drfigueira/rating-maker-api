@@ -17,3 +17,6 @@ spring:
     username: root
     password: root
 
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000

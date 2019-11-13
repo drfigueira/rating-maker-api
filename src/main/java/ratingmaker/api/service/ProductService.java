@@ -2,6 +2,7 @@ package ratingmaker.api.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ratingmaker.api.domain.entity.Product;
 import ratingmaker.api.domain.request.ProductRequest;
 import ratingmaker.api.domain.response.ProductResponse;
@@ -37,6 +38,7 @@ public class ProductService {
                 productRepository.findAll());
     }
 
+    @Transactional
     public ProductResponse findById(final Long id) {
         log.info("method=findById, id={}", id);
         return productMapper.entityToResponse(
@@ -47,8 +49,8 @@ public class ProductService {
     public void update(final Long id,
                        final ProductRequest productRequest) {
         log.info("method=update, id={}, productRequest={}", id, productRequest);
-        Product product = productMapper.requestToEntity(productRequest);
-        product.setId(findIdIfExists(id));
+        Product product = productRepository.findById(findIdIfExists(id)).get();
+        product.setName(productRequest.getName());
         productRepository.save(product);
     }
 
